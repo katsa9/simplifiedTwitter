@@ -61,13 +61,13 @@ class Tweet extends Component {
   }
 }
 
-function mapStateToProps({users, tweets, authedUser}, {id}) { //second object is the props passed from the parent component
+function mapStateToProps({authedUser, users, tweets}, {id}) { //second object is the props passed from the parent component
   const tweet = tweets[id]
   const parentTweet = tweet ? tweets[tweet.replyingTo] : null
   return {
     authedUser,
     tweet: tweet 
-      ? formatTweet(tweet, users[tweet.author, authedUser], parentTweet)
+      ? formatTweet(tweet, users[tweet.author], authedUser, parentTweet)
       : null
   }
 }
