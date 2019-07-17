@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddTweet } from '../actions/tweets'
+import { Redirect } from 'react-router-dom'
 
 class NewTweet extends Component {
   //using a controlled component with local state because this state isn't used anywhere else in the app. Also because we need to update the ui on this state change (disable submit button)
   state = {   
     text: '',
+    toHome: false,
   }
 
   handleChange = (e) => {
@@ -21,15 +23,17 @@ class NewTweet extends Component {
     const { dispatch, id } = this.props
     dispatch(handleAddTweet(text, id))
     this.setState(() => ({
-      text: ''
+      text: '',
+      toHome: id ? false : true, //only go to home if we are composing new tweet - not replying 
     }))
   }
 
   render() {
-    const { text } = this.state
+    const { text, toHome } = this.state
 
-    {/* todo: Redirect to / if submitted */}
-
+    if (toHome === true) {
+      return <Redirect to='/' />
+    }
     const tweetLeft = 280 - text.length
 
     return (
